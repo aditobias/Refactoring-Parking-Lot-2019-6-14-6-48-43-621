@@ -7,6 +7,8 @@ import java.util.Optional;
 public class ParkingBoy {
 
     public static final String NOT_ENOUGH_POSITION = "Not enough position.";
+    public static final String PLEASE_PROVIDE_YOUR_PARKING_TICKET = "Please provide your parking ticket";
+    public static final String UNRECOGNIZED_PARKING_TICKET = "Unrecognized parking ticket.";
     private List<ParkingLot> parkingLotList = new ArrayList<>();
     private ParkingLot parkingLot;
     private String lastErrorMessage;
@@ -55,7 +57,7 @@ public class ParkingBoy {
         Car car = new Car();
 
         if(ticket == null) {
-            lastErrorMessage = "Please provide your parking ticket";
+            lastErrorMessage = PLEASE_PROVIDE_YOUR_PARKING_TICKET;
             return null;
         }
 
@@ -70,7 +72,7 @@ public class ParkingBoy {
         }
 
         if(car == null){
-            lastErrorMessage = "Unrecognized parking ticket.";
+            lastErrorMessage = UNRECOGNIZED_PARKING_TICKET;
             return null;
         }
 

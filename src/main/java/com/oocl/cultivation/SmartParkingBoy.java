@@ -22,7 +22,7 @@ public class SmartParkingBoy extends ParkingBoy{
         }
 
         if(ticket == null){
-            setLastErrorMessage("Not enough position.");
+            setLastErrorMessage(NOT_ENOUGH_POSITION);
             return null;
         }
 

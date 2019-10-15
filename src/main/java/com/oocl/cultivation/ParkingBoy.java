@@ -6,6 +6,7 @@ import java.util.Optional;
 
 public class ParkingBoy {
 
+    public static final String NOT_ENOUGH_POSITION = "Not enough position.";
     private List<ParkingLot> parkingLotList = new ArrayList<>();
     private ParkingLot parkingLot;
     private String lastErrorMessage;
@@ -43,7 +44,7 @@ public class ParkingBoy {
         }
 
         if(ticket == null){
-            lastErrorMessage = "Not enough position.";
+            setLastErrorMessage(NOT_ENOUGH_POSITION);
             return null;
         }
 

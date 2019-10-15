@@ -17,16 +17,11 @@ public class SmartParkingBoy extends ParkingBoy{
         if(fetchedParkingLot != null){
             ticket = fetchedParkingLot.park(car);
             return ticket;
-        }else{
-            ticket = null;
         }
 
-        if(ticket == null){
-            setLastErrorMessage(NOT_ENOUGH_POSITION);
-            return null;
-        }
+        setLastErrorMessage(NOT_ENOUGH_POSITION);
+        return null;
 
-        return ticket;
     }
 
     private ParkingLot getMoreSpaciousParkingLot(ParkingLot parkLotOne, ParkingLot parkLotTwo) {

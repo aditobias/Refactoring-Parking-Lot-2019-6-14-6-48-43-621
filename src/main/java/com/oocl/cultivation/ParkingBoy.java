@@ -2,7 +2,10 @@ package com.oocl.cultivation;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
+
+import static java.util.Objects.isNull;
 
 public class ParkingBoy {
     public static final String NOT_ENOUGH_POSITION = "Not enough position.";
@@ -17,11 +20,7 @@ public class ParkingBoy {
         parkingLotList.add(parkingLot);
         this.parkingLot = parkingLot;
     }
-
-    public ParkingLot getParkingLot() {
-        return parkingLot;
-    }
-
+    
     public void setLastErrorMessage(String lastErrorMessage) {
         this.lastErrorMessage = lastErrorMessage;
     }
@@ -50,29 +49,21 @@ public class ParkingBoy {
     }
 
     public Car fetch(ParkingTicket ticket) {
-        Car car = new Car();
-
         if(ticket == null) {
             lastErrorMessage = PLEASE_PROVIDE_YOUR_PARKING_TICKET;
             return null;
         }
+        Car car = parkingLotList.stream().map(parkingLot -> parkingLot.fetch(ticket))
+                .filter(Objects::nonNull)
+                .findFirst()
+                .orElse(null);
 
-        for(ParkingLot parkingLot : parkingLotList){
-            car = parkingLot.fetch(ticket);
-
-            if(car != null) {
-                return car;
-            }else{
-                car = null;
-            }
+        if(!isNull(car)){
+            return car;
         }
 
-        if(car == null){
-            lastErrorMessage = UNRECOGNIZED_PARKING_TICKET;
-            return null;
-        }
-
-        return car;
+        lastErrorMessage = UNRECOGNIZED_PARKING_TICKET;
+        return null;
     }
 
     public String getLastErrorMessage() {

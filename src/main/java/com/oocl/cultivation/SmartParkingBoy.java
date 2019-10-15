@@ -17,8 +17,6 @@ public class SmartParkingBoy extends ParkingBoy{
         if(fetchedParkingLot != null){
             ticket = fetchedParkingLot.park(car);
             return ticket;
-        }else{
-            ticket = null;
         }
 
         setLastErrorMessage(NOT_ENOUGH_POSITION);

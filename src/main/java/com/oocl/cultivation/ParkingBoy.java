@@ -2,7 +2,10 @@ package com.oocl.cultivation;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
+
+import static java.util.Objects.isNull;
 
 public class ParkingBoy {
 
@@ -54,29 +57,25 @@ public class ParkingBoy {
     }
 
     public Car fetch(ParkingTicket ticket) {
-        Car car = new Car();
 
         if(ticket == null) {
             lastErrorMessage = PLEASE_PROVIDE_YOUR_PARKING_TICKET;
             return null;
         }
 
-        for(ParkingLot parkingLot : parkingLotList){
-            car = parkingLot.fetch(ticket);
+        Car car = parkingLotList.stream()
+                .map(parkingLot -> parkingLot.fetch(ticket))
+                .filter(Objects::nonNull)
+                .findFirst()
+                .orElse(null);
 
-            if(car != null) {
-                return car;
-            }else{
-                car = null;
-            }
+        if(!isNull(car)){
+            return car;
         }
 
-        if(car == null){
-            lastErrorMessage = UNRECOGNIZED_PARKING_TICKET;
-            return null;
-        }
+        lastErrorMessage = UNRECOGNIZED_PARKING_TICKET;
+        return null;
 
-        return car;
     }
 
     public String getLastErrorMessage() {
